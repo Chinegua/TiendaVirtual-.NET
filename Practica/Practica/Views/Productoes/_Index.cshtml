@@ -1,0 +1,114 @@
+﻿@model IEnumerable<Practica.Producto>
+
+@{
+    Layout = "~/Views/Shared/_layout.cshtml";
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+
+
+</head>
+<body>
+    
+    <nav class="navbar navbar-inverse">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="#">WebSiteName</a>
+            </div>
+            <ul class="nav navbar-nav">
+                <li class="active"><a href="#">Home</a></li>
+                <li><a href="#">Page 1</a></li>
+                <li><a href="#">Page 2</a></li>
+                <li><a href="#">Page 3</a></li>
+            </ul>
+        </div>
+    </nav>
+    <div class="container">
+    <div>
+       @Html.ActionLink("Crear nuevo producto", "Create", null,null,new { @class = "btn btn-success"})
+
+    </div>
+    <br />
+    
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Nombre)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Descripcion)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Precio)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Imagen)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Cantidad)
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Nombre)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Descripcion)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Precio)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Imagen)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Cantidad)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+                @Html.ActionLink("Details", "Details", new { id = item.Id }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+            </td>
+        </tr>
+}
+        <div class="row">
+            @foreach (var item in Model)
+    {
+
+        <div class="col-sm-6 col-md-4">
+            <div class="thumbnail">
+                <img src="@Html.DisplayFor(modelItem => item.Imagen)" width="200px" height="200px" alt="...">
+                <div class="caption">
+                    <h3>@Html.DisplayFor(modelItem => item.Nombre)</h3>
+                    <p>@Html.DisplayFor(modelItem => item.Descripcion)</p>
+                    <b>@Html.DisplayFor(modelItem => item.Precio) €</b>
+                    <p>
+                        @Html.ActionLink("Editar", "Edit", null, new { id = item.Id }, new { @class = "btn btn-success" })
+                        @Html.ActionLink("Detalles", "Details", null, new { id = item.Id }, new { @class = "btn btn-warning" })
+                        @Html.ActionLink("Eliminar", "Delete", null, new { id = item.Id }, new { @class = "btn btn-danger" })
+
+
+                    </p>
+                </div>
+            </div>
+        </div>
+}
+        </div>
+
+        </table>
+    </div>
+</body>
+</html>

@@ -1,0 +1,44 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Delete</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    <script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
+    <link rel="stylesheet" href="~/Content/css/mystyle.css" />
+
+
+</head>
+<body>
+    @{ 
+        if( TempData["items"] == null)
+        {
+            TempData["items"] = 0;
+        }
+        else
+        {
+            TempData["items"] = (int)TempData["items"] + 1;
+        }
+    }
+
+    <nav class="navbar navbar-inverse">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="#">BananaComputer</a>
+            </div>
+            <ul class="nav navbar-nav">
+                <li class=""><a href="@Url.Action("Index","Productoes")">Inicio</a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                    <li style="color:white"><a href="@Url.Action("Carrito","Productoes")"><i class="fas fa-shopping-cart icono"></i> <span class="badge badge-light"> @TempData["items"] </span> </a> </li>
+            </ul>
+        </div>
+    </nav>
+
+    @RenderBody();
+</body>
+</html>
+

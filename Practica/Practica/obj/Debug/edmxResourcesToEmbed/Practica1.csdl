@@ -1,0 +1,101 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="practica1Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityContainer Name="practica1Entities2" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Pedido" EntityType="practica1Model.Pedido" />
+    <EntitySet Name="Pedido_producto" EntityType="practica1Model.Pedido_producto" />
+    <EntitySet Name="Producto" EntityType="practica1Model.Producto" />
+    <AssociationSet Name="FK_Pedido_producto_Pedido" Association="practica1Model.FK_Pedido_producto_Pedido">
+      <End Role="Pedido" EntitySet="Pedido" />
+      <End Role="Pedido_producto" EntitySet="Pedido_producto" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Pedido_producto_Producto" Association="practica1Model.FK_Pedido_producto_Producto">
+      <End Role="Producto" EntitySet="Producto" />
+      <End Role="Pedido_producto" EntitySet="Pedido_producto" />
+    </AssociationSet>
+    <EntitySet Name="Usuario" EntityType="practica1Model.Usuario" />
+    <AssociationSet Name="FK_Pedido_Usuario" Association="practica1Model.FK_Pedido_Usuario">
+      <End Role="Usuario" EntitySet="Usuario" />
+      <End Role="Pedido" EntitySet="Pedido" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="Pedido">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Cantidad" Type="Int32" />
+    <Property Name="Usuario" Type="Int32" />
+    <NavigationProperty Name="Pedido_producto" Relationship="practica1Model.FK_Pedido_producto_Pedido" FromRole="Pedido" ToRole="Pedido_producto" />
+    <NavigationProperty Name="Usuario1" Relationship="practica1Model.FK_Pedido_Usuario" FromRole="Pedido" ToRole="Usuario" />
+  </EntityType>
+  <EntityType Name="Pedido_producto">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Id_pedido" Type="Int32" />
+    <Property Name="Id_producto" Type="Int32" />
+    <NavigationProperty Name="Pedido" Relationship="practica1Model.FK_Pedido_producto_Pedido" FromRole="Pedido_producto" ToRole="Pedido" />
+    <NavigationProperty Name="Producto" Relationship="practica1Model.FK_Pedido_producto_Producto" FromRole="Pedido_producto" ToRole="Producto" />
+  </EntityType>
+  <EntityType Name="Producto">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Descripcion" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="Precio" Type="Double" />
+    <Property Name="Imagen" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="Cantidad" Type="Int32" />
+    <NavigationProperty Name="Pedido_producto" Relationship="practica1Model.FK_Pedido_producto_Producto" FromRole="Producto" ToRole="Pedido_producto" />
+  </EntityType>
+  <Association Name="FK_Pedido_producto_Pedido">
+    <End Type="practica1Model.Pedido" Role="Pedido" Multiplicity="0..1" />
+    <End Type="practica1Model.Pedido_producto" Role="Pedido_producto" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Pedido">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Pedido_producto">
+        <PropertyRef Name="Id_pedido" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Pedido_producto_Producto">
+    <End Type="practica1Model.Producto" Role="Producto" Multiplicity="0..1" />
+    <End Type="practica1Model.Pedido_producto" Role="Pedido_producto" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Producto">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Pedido_producto">
+        <PropertyRef Name="Id_producto" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="Usuario">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Nick" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Nombre" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="Direccion" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Email" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Pedido" Relationship="practica1Model.FK_Pedido_Usuario" FromRole="Usuario" ToRole="Pedido" />
+  </EntityType>
+  <Association Name="FK_Pedido_Usuario">
+    <End Type="practica1Model.Usuario" Role="Usuario" Multiplicity="0..1" />
+    <End Type="practica1Model.Pedido" Role="Pedido" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Usuario">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Pedido">
+        <PropertyRef Name="Usuario" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>

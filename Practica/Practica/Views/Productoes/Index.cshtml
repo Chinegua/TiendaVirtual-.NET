@@ -1,0 +1,60 @@
+﻿@model IEnumerable<Practica.Producto>
+
+@{
+                /**/
+
+                ViewBag.Title = "Index";
+                Layout = "~/Views/Shared/_layout.cshtml";
+}
+
+<div class="container">
+    <div>
+        @Html.ActionLink("Crear nuevo producto", "Create", null, null, new { @class = "btn btn-success" })
+
+    </div>
+    <br />
+
+            <div class="row">
+                @foreach (var item in Model)
+    {
+        if (item.Cantidad > 0)
+        {
+            <div class="col-sm-6 col-md-4">
+                <div class="thumbnail">
+                    <img src="@Html.DisplayFor(modelItem => item.Imagen)" width="200px" height="200px" alt="...">
+                    <div class="caption">
+                        <h3>@Html.DisplayFor(modelItem => item.Nombre)</h3>
+                        <p>@Html.DisplayFor(modelItem => item.Descripcion)</p>
+                        <b>@Html.DisplayFor(modelItem => item.Precio) €</b>
+                        <p>
+                            @Html.ActionLink("Detalles", "Details", null, new { id = item.Id }, new { @class = "btn btn-warning" })
+                            @Html.ActionLink("Añadir", "AddCarrito", null, new { id = item.Id }, new { @class = "btn btn-danger" })
+
+
+                        </p>
+                    </div>
+                </div>
+            </div>
+}
+else
+{
+            <div class="col-sm-6 col-md-4">
+                <div class="thumbnail">
+                    <img src="@Html.DisplayFor(modelItem => item.Imagen)" width="200px" height="200px" alt="...">
+                    <div class="caption">
+                        <h3>@Html.DisplayFor(modelItem => item.Nombre)</h3>
+                        <p>@Html.DisplayFor(modelItem => item.Descripcion)</p>
+                        <p><font color="red"><b>AGOTADO</b></font></p>
+                        <p>
+                            @Html.ActionLink("Detalles", "Details", null, new { id = item.Id }, new { @class = "btn btn-warning" })
+
+
+                        </p>
+                    </div>
+                </div>
+            </div>
+}
+}
+            </div>
+
+</div>

@@ -1,0 +1,70 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="practica1Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Pedido">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Cantidad" Type="Int32" />
+    <NavigationProperty Name="Predido_producto" Relationship="Self.FK_Predido_producto_Pedido" FromRole="Pedido" ToRole="Predido_producto" />
+  </EntityType>
+  <EntityType Name="Predido_producto">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Id_pedido" Type="Int32" />
+    <Property Name="Id_producto" Type="Int32" />
+    <NavigationProperty Name="Pedido" Relationship="Self.FK_Predido_producto_Pedido" FromRole="Predido_producto" ToRole="Pedido" />
+    <NavigationProperty Name="Producto" Relationship="Self.FK_Predido_producto_Producto" FromRole="Predido_producto" ToRole="Producto" />
+  </EntityType>
+  <EntityType Name="Producto">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Descripcion" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="Precio" Type="Double" />
+    <Property Name="Imagen" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Predido_producto" Relationship="Self.FK_Predido_producto_Producto" FromRole="Producto" ToRole="Predido_producto" />
+  </EntityType>
+  <Association Name="FK_Predido_producto_Pedido">
+    <End Role="Pedido" Type="Self.Pedido" Multiplicity="0..1" />
+    <End Role="Predido_producto" Type="Self.Predido_producto" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Pedido">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Predido_producto">
+        <PropertyRef Name="Id_pedido" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Predido_producto_Producto">
+    <End Role="Producto" Type="Self.Producto" Multiplicity="0..1" />
+    <End Role="Predido_producto" Type="Self.Predido_producto" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Producto">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Predido_producto">
+        <PropertyRef Name="Id_producto" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="practica1Entities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Pedido" EntityType="Self.Pedido" />
+    <EntitySet Name="Predido_producto" EntityType="Self.Predido_producto" />
+    <EntitySet Name="Producto" EntityType="Self.Producto" />
+    <AssociationSet Name="FK_Predido_producto_Pedido" Association="Self.FK_Predido_producto_Pedido">
+      <End Role="Pedido" EntitySet="Pedido" />
+      <End Role="Predido_producto" EntitySet="Predido_producto" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Predido_producto_Producto" Association="Self.FK_Predido_producto_Producto">
+      <End Role="Producto" EntitySet="Producto" />
+      <End Role="Predido_producto" EntitySet="Predido_producto" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
